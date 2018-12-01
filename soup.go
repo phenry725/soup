@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"errors"
 	"io/ioutil"
+	"fmt"
 	"net/http"
 	"regexp"
 	"strings"
@@ -53,7 +54,7 @@ func GetWithClient(url string, client *http.Client) (string, error) {
 		if debug {
 			panic("Couldn't perform GET request to " + url)
 		}
-		return "", errors.New("couldn't perform GET request to " + url)
+		return "", errors.New(fmt.Sprintf("could not perform GET request to %v. Error was %v", url, err))
 	}
 	// Set headers
 	for hName, hValue := range Headers {
@@ -72,7 +73,7 @@ func GetWithClient(url string, client *http.Client) (string, error) {
 		if debug {
 			panic("Couldn't perform GET request to " + url)
 		}
-		return "", errors.New("couldn't perform GET request to " + url)
+		return "", errors.New(fmt.Sprintf("could not perform GET request to %v. Error was %v", url, err))
 	}
 	defer resp.Body.Close()
 	bytes, err := ioutil.ReadAll(resp.Body)
